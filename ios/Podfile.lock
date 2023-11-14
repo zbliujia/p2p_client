@@ -2,20 +2,26 @@ PODS:
   - Flutter (1.0.0)
   - image_save (0.0.1):
     - Flutter
+  - network_info_plus (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - image_save (from `.symlinks/plugins/image_save/ios`)
+  - network_info_plus (from `.symlinks/plugins/network_info_plus/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
   image_save:
     :path: ".symlinks/plugins/image_save/ios"
+  network_info_plus:
+    :path: ".symlinks/plugins/network_info_plus/ios"
 
 SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   image_save: 66ab41fa2c60bc9569e55563ea287cced7b79fd1
+  network_info_plus: 6d0c3eb8367b8164fa3fb0c19875e3f59d49697f
 
 PODFILE CHECKSUM: 02caaa843f6501172c0d470d80e72f61175c8b93
 
