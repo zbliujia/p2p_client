@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +5,7 @@ import 'package:image_save/image_save.dart';
 import 'package:p2p_client/common/find_devices.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:p2p_client/pages/login.dart';
+import 'package:p2p_client/pages/video_detail.dart';
 
 import 'common/global.dart';
 import 'network/server_api.dart';
@@ -78,6 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _incrementCounter() {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) {
+        // return VideoDetail();
         return LoginPage();
       },
     ));

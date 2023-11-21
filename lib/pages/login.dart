@@ -128,6 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                   // fontWeight: FontWeight.w600,
                 ),
               ),
+              Image.asset('assets/images/login_logo.png', width: 169.w, height: 148.w,),
               Padding(
                 padding: EdgeInsets.only(left: 24.w, right: 24.w),
                 child: Container(
