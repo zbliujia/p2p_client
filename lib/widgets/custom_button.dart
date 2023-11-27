@@ -56,7 +56,7 @@ class _CustomButtonState extends State<CustomButton> {
     BoxDecoration btnDecoration = greenDecoration;
     if (widget.bgStyle == CustomButtonBG.customButtonLoginGreenButtonStyle) {
       width = 128.w;
-      height = 48.w;
+      height = 40.w;
     }
 
     if(widget.onTap == null) {

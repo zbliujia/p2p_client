@@ -1,9 +1,12 @@
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_save/image_save.dart';
+import 'package:p2p_client/common/const.dart';
 import 'package:p2p_client/common/find_devices.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:p2p_client/pages/device_add.dart';
 import 'package:p2p_client/pages/login.dart';
 import 'package:p2p_client/pages/video_detail.dart';
 
@@ -76,12 +79,6 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   void _incrementCounter() {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) {
-        // return VideoDetail();
-        return LoginPage();
-      },
-    ));
     // scanNetwork();
     // ImageSave.getImagesFromSandbox();
     setState(() {
@@ -98,10 +95,28 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    final dio = Dio();
+    dio.get('https://www.baidu.com');
     ServerApi.userInfo().then((value) {
       Global.userInfo = value;
+      if (Global.userInfo?.device != null && Global.userInfo!.device!.isNotEmpty) {
+        // 进入连接设备的页面
+      } else {
+        // 进入绑定设备页面
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) {
+            return DeviceAddPage();
+          },
+          settings: const RouteSettings(name: RouterPath.pathBindDevice),
+        ));
+      }
     }).catchError((e){
-      // todo 弹出登录框
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) {
+          return LoginPage();
+        },
+        settings: const RouteSettings(name: RouterPath.pathLogin),
+      ));
     });
   }
 

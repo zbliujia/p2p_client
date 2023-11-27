@@ -1,7 +1,7 @@
 
 
 import '../models/user.dart';
-import 'base.dart';
+import 'server_base.dart';
 
 class ServerApi {
 

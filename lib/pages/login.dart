@@ -88,8 +88,8 @@ class _LoginPageState extends State<LoginPage> {
       return EasyLoading.showToast('请输入验证码');
     }
     try {
-
-      final user = await ServerApi.loginByCode(phoneController.text, codeController.text);
+      final user = await ServerApi.loginByCode(
+          phoneController.text, codeController.text);
       Global.userInfo = user;
       EasyLoading.showSuccess('登录成功${user.uid}');
     } on HttpError catch (e) {
@@ -100,21 +100,26 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     AppBar appBar = AppBar(
-      iconTheme: const IconThemeData(
-        color: Colors.black, // 设置返回箭头颜色为白色
-      ),
+      automaticallyImplyLeading: false,
+      // iconTheme: const IconThemeData(
+      //   color: Colors.black, // 设置返回箭头颜色为白色
+      // ),
       elevation: 0,
-      backgroundColor: const Color(0x00FFFFFF),
-      title: const Text(
-        '',
-        style: TextStyle(color: ColorUtil.navBlackTitleTextColor),
-      ),
-      centerTitle: true,
+      backgroundColor: Colors.transparent,
+      // title: const Text(
+      //   '',
+      //   style: TextStyle(color: ColorUtil.navBlackTitleTextColor),
+      // ),
+      // centerTitle: true,
     );
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: appBar,
       // extendBodyBehindAppBar: true,
       body: Container(
+          padding: EdgeInsets.only(
+              top: appBar.preferredSize.height +
+                  MediaQuery.of(context).padding.top),
           color: ColorUtil.mainBgColor,
           width: double.infinity,
           height: double.infinity,
@@ -128,9 +133,13 @@ class _LoginPageState extends State<LoginPage> {
                   // fontWeight: FontWeight.w600,
                 ),
               ),
-              Image.asset('assets/images/login_logo.png', width: 169.w, height: 148.w,),
+              Image.asset(
+                'assets/images/login_logo.png',
+                width: 169.w,
+                height: 148.w,
+              ),
               Padding(
-                padding: EdgeInsets.only(left: 24.w, right: 24.w),
+                padding: EdgeInsets.only(left: 24.w, right: 24.w, top: 20.w),
                 child: Container(
                   width: double.infinity,
                   height: 224.w,
@@ -152,7 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                           height: 40.w,
                         ),
                         CustomButton(
-                          titleStr: "登录",
+                          titleStr: "立即登录",
                           bgStyle:
                               CustomButtonBG.customButtonLoginGreenButtonStyle,
                           onTap: canLogin
@@ -196,7 +205,7 @@ class _LoginPageState extends State<LoginPage> {
           fontWeight: FontWeight.w600,
         ),
         decoration: InputDecoration(
-          hintText: '请输入手机号',
+          hintText: '手机号',
           hintStyle: TextStyle(
               fontSize: 18.sp,
               color: Colors.black.withOpacity(0.2),
@@ -244,7 +253,7 @@ class _LoginPageState extends State<LoginPage> {
           fontWeight: FontWeight.w600,
         ),
         decoration: InputDecoration(
-          hintText: '请输入验证码',
+          hintText: '验证码',
           hintStyle: TextStyle(
               fontSize: 18.sp,
               color: Colors.black.withOpacity(0.2),
@@ -259,10 +268,10 @@ class _LoginPageState extends State<LoginPage> {
             child: Padding(
               padding: EdgeInsets.all(12.5.w),
               child: Text(
-                canSendMms ? "获取验证码" : "$countdownTime秒重新获取",
+                canSendMms ? "发送验证码" : "$countdownTime秒重新获取",
                 style: TextStyle(
                     fontSize: 14.sp,
-                    color: canSendMms ? Colors.black : const Color(0xFF888888)),
+                    color: canSendMms ? ColorUtil.greenTextColor : const Color(0xFF888888)),
               ),
             ),
           ),

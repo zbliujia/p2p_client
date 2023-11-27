@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:network_info_plus/network_info_plus.dart';
+import 'package:p2p_client/models/device_info.dart';
+import 'package:p2p_client/network/device_api.dart';
 
 Future<void> scanNetwork() async {
   final wifiIP = await NetworkInfo().getWifiIP();
@@ -19,4 +21,9 @@ Future<void> scanNetwork() async {
       socket.destroy();
     }).catchError((error) => null);
   }
+}
+
+Future<DeviceInfo> scanNetworkByHttp() async {
+  DeviceInfo info = await DeviceApi.getDeviceInfo("token");
+  return info;
 }
