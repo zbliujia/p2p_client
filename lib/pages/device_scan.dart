@@ -1,7 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 import 'package:p2p_client/common/find_devices.dart';
+import 'package:p2p_client/widgets/base_state.dart';
 
 import '../common/color_util.dart';
 import '../widgets/base_stateful_widget.dart';
@@ -15,7 +17,7 @@ class DeviceScanPage extends BaseStatefulWidget {
   State createState() => _DeviceScanPageState();
 }
 
-class _DeviceScanPageState extends State<DeviceScanPage> {
+class _DeviceScanPageState extends BaseState<DeviceScanPage> {
 
   String text = "正在为你扫描设备";
 
@@ -55,15 +57,7 @@ class _DeviceScanPageState extends State<DeviceScanPage> {
                   // fontWeight: FontWeight.w600,
                 ),
               ),
-              TextButton(
-                child: const Text("去添加"),
-                onPressed: () {
-                  setState(() {
-                    text = "开始扫描";
-                  });
-                  scanNetworkByHttp();
-                },
-              )
+              Lottie.asset('assets/lotties/device_scan.json'),
             ],
           )),
     );

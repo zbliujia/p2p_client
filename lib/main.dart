@@ -107,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
           builder: (context) {
             return DeviceAddPage();
           },
-          settings: const RouteSettings(name: RouterPath.pathBindDevice),
+          settings: const RouteSettings(name: RouterPath.pathDeviceAdd),
         ));
       }
     }).catchError((e){

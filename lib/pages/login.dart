@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:p2p_client/common/global.dart';
+import 'package:p2p_client/widgets/base_state.dart';
+import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 
 import '../common/color_util.dart';
 import '../network/base.dart';
@@ -21,7 +23,7 @@ class LoginPage extends BaseStatefulWidget {
   State createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends BaseState<LoginPage> {
   bool canLogin = false;
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController codeController = TextEditingController();
@@ -98,6 +100,12 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
+  void dispose() {
+    stopSendMmsCountdown();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     AppBar appBar = AppBar(
       automaticallyImplyLeading: false,
@@ -112,72 +120,74 @@ class _LoginPageState extends State<LoginPage> {
       // ),
       // centerTitle: true,
     );
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: appBar,
-      // extendBodyBehindAppBar: true,
-      body: Container(
-          padding: EdgeInsets.only(
-              top: appBar.preferredSize.height +
-                  MediaQuery.of(context).padding.top),
-          color: ColorUtil.mainBgColor,
-          width: double.infinity,
-          height: double.infinity,
-          child: Column(
-            children: [
-              Text(
-                "欢迎来到llano私有云",
-                style: TextStyle(
-                  fontSize: 24.sp,
-                  color: const Color(0xFF3D3D3D),
-                  // fontWeight: FontWeight.w600,
-                ),
-              ),
-              Image.asset(
-                'assets/images/login_logo.png',
-                width: 169.w,
-                height: 148.w,
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 24.w, right: 24.w, top: 20.w),
-                child: Container(
-                  width: double.infinity,
-                  height: 224.w,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+    return KeyboardDismisser(
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: appBar,
+        // extendBodyBehindAppBar: true,
+        body: Container(
+            padding: EdgeInsets.only(
+                top: appBar.preferredSize.height +
+                    MediaQuery.of(context).padding.top),
+            color: ColorUtil.mainBgColor,
+            width: double.infinity,
+            height: double.infinity,
+            child: Column(
+              children: [
+                Text(
+                  "欢迎来到llano私有云",
+                  style: TextStyle(
+                    fontSize: 24.sp,
+                    color: const Color(0xFF3D3D3D),
+                    // fontWeight: FontWeight.w600,
                   ),
-                  child: Padding(
-                    padding:
-                        EdgeInsets.only(left: 24.w, right: 24.w, top: 24.w),
-                    child: Column(
-                      children: [
-                        _inputPhoneWidget(),
-                        SizedBox(
-                          height: 12.w,
-                        ),
-                        _inputCodeWidget(),
-                        SizedBox(
-                          height: 40.w,
-                        ),
-                        CustomButton(
-                          titleStr: "立即登录",
-                          bgStyle:
-                              CustomButtonBG.customButtonLoginGreenButtonStyle,
-                          onTap: canLogin
-                              ? () {
-                                  unFocus();
-                                  login();
-                                }
-                              : null,
-                        ),
-                      ],
+                ),
+                Image.asset(
+                  'assets/images/login_logo.png',
+                  width: 169.w,
+                  height: 148.w,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 24.w, right: 24.w, top: 20.w),
+                  child: Container(
+                    width: double.infinity,
+                    height: 224.w,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    ),
+                    child: Padding(
+                      padding:
+                          EdgeInsets.only(left: 24.w, right: 24.w, top: 24.w),
+                      child: Column(
+                        children: [
+                          _inputPhoneWidget(),
+                          SizedBox(
+                            height: 12.w,
+                          ),
+                          _inputCodeWidget(),
+                          SizedBox(
+                            height: 40.w,
+                          ),
+                          CustomButton(
+                            titleStr: "立即登录",
+                            bgStyle: CustomButtonBG
+                                .customButtonLoginGreenButtonStyle,
+                            onTap: canLogin
+                                ? () {
+                                    unFocus();
+                                    login();
+                                  }
+                                : null,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          )),
+              ],
+            )),
+      ),
     );
   }
 
@@ -271,7 +281,9 @@ class _LoginPageState extends State<LoginPage> {
                 canSendMms ? "发送验证码" : "$countdownTime秒重新获取",
                 style: TextStyle(
                     fontSize: 14.sp,
-                    color: canSendMms ? ColorUtil.greenTextColor : const Color(0xFF888888)),
+                    color: canSendMms
+                        ? ColorUtil.greenTextColor
+                        : const Color(0xFF888888)),
               ),
             ),
           ),

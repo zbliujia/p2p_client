@@ -7,7 +7,7 @@ enum CustomButtonBG {
 
 class CustomButton extends StatefulWidget {
   TextStyle? style;
-  CustomButtonBG? bgStyle = CustomButtonBG.customButtonLoginGreenButtonStyle;
+  CustomButtonBG? bgStyle;
   String titleStr;
   Function()? onTap;
   Color? textColor = Colors.black;
@@ -18,7 +18,7 @@ class CustomButton extends StatefulWidget {
   CustomButton(
       {required this.titleStr,
       this.style,
-      required this.bgStyle,
+      this.bgStyle,
       this.onTap,
       this.height,
       this.width,
@@ -51,6 +51,8 @@ class _CustomButtonState extends State<CustomButton> {
 
   @override
   Widget build(BuildContext context) {
+    width = widget.width??0;
+    height = widget.height??0;
 
     Color? textColor = widget.textColor;
     BoxDecoration btnDecoration = greenDecoration;
@@ -65,23 +67,6 @@ class _CustomButtonState extends State<CustomButton> {
     }
 
     height = widget.height??height;
-
-    double btnLeft = 6.w;
-    double btnRight = 6.w;
-    double btnTop = 4.w;
-    double btnBottom = 12.w;
-    double btnWidth = 0;
-    double btnHeight = 0;
-    if (height < (btnTop + btnBottom)) {
-      btnHeight = 0;
-    } else {
-      btnHeight = height - (btnTop + btnBottom);
-    }
-    if (width < (btnLeft + btnRight)) {
-      btnWidth = 0;
-    } else {
-      btnWidth = width - (btnLeft + btnRight);
-    }
 
     return Stack(
       children: [

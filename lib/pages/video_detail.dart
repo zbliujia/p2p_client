@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:p2p_client/widgets/base_state.dart';
 import 'package:video_player/video_player.dart';
 
 import '../widgets/base_stateful_widget.dart';
@@ -13,7 +14,7 @@ class VideoDetail extends BaseStatefulWidget {
   State createState() => _VideoDetailState();
 }
 
-class _VideoDetailState extends State<VideoDetail> {
+class _VideoDetailState extends BaseState<VideoDetail> {
   late VideoPlayerController _controller;
 
   @override
@@ -58,7 +59,7 @@ class _VideoDetailState extends State<VideoDetail> {
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 }
