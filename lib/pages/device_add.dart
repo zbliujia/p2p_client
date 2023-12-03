@@ -24,16 +24,10 @@ class _DeviceAddPageState extends BaseState<DeviceAddPage> {
   Widget build(BuildContext context) {
     AppBar appBar = AppBar(
       automaticallyImplyLeading: false,
-      // iconTheme: const IconThemeData(
-      //   color: Colors.black, // 设置返回箭头颜色为白色
-      // ),
       elevation: 0,
       backgroundColor: Colors.transparent,
-      // title: const Text(
-      //   '',
-      //   style: TextStyle(color: ColorUtil.navBlackTitleTextColor),
-      // ),
-      // centerTitle: true,
+      title: const Text("我的设备"),
+      centerTitle: true,
     );
     return Scaffold(
       extendBodyBehindAppBar: true,

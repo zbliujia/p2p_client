@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:p2p_client/common/const.dart';
 import 'package:p2p_client/common/find_devices.dart';
 import 'package:p2p_client/models/device_info.dart';
+import 'package:p2p_client/pages/device_bind.dart';
 import 'package:p2p_client/pages/device_scan.dart';
 import 'package:p2p_client/widgets/base_state.dart';
 import 'package:p2p_client/widgets/custom_button.dart';
@@ -93,7 +94,15 @@ class _DeviceScanListPageState extends BaseState<DeviceScanListPage> {
                                   color: ColorUtil.greenTextColor,
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w400),),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) {
+                              return DeviceBindPage(device: device,);
+                            },
+                            settings:
+                            const RouteSettings(name: RouterPath.pathDeviceBind),
+                          ));
+                        },
                       )
                     ],
                   ),

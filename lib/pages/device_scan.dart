@@ -34,10 +34,11 @@ class _DeviceScanPageState extends BaseState<DeviceScanPage> {
       if (context.mounted) {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) {
-            return DeviceScanListPage(devices: devices,);
+            return DeviceScanListPage(
+              devices: devices,
+            );
           },
-          settings:
-          const RouteSettings(name: RouterPath.pathDeviceScanList),
+          settings: const RouteSettings(name: RouterPath.pathDeviceScanList),
         ));
       }
     } on Exception catch (e) {
@@ -59,16 +60,12 @@ class _DeviceScanPageState extends BaseState<DeviceScanPage> {
   Widget build(BuildContext context) {
     AppBar appBar = AppBar(
       automaticallyImplyLeading: false,
-      // iconTheme: const IconThemeData(
-      //   color: Colors.black, // 设置返回箭头颜色为白色
-      // ),
       elevation: 0,
       backgroundColor: Colors.transparent,
-      // title: const Text(
-      //   '',
-      //   style: TextStyle(color: ColorUtil.navBlackTitleTextColor),
-      // ),
-      // centerTitle: true,
+      title: const Text(
+        '我的设备',
+      ),
+      centerTitle: true,
     );
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -102,7 +99,9 @@ class _DeviceScanPageState extends BaseState<DeviceScanPage> {
                             // fontWeight: FontWeight.w600,
                           ),
                         ),
-                        SizedBox(height: 15.w,),
+                        SizedBox(
+                          height: 15.w,
+                        ),
                         Text(
                           textDesc,
                           style: TextStyle(
@@ -111,7 +110,9 @@ class _DeviceScanPageState extends BaseState<DeviceScanPage> {
                             // fontWeight: FontWeight.w600,
                           ),
                         ),
-                        SizedBox(height: 54.w,),
+                        SizedBox(
+                          height: 54.w,
+                        ),
                         isScanning
                             ? const SizedBox.shrink()
                             : CustomButton(
@@ -120,7 +121,9 @@ class _DeviceScanPageState extends BaseState<DeviceScanPage> {
                                     .customButtonSmallGreenButtonStyle,
                                 onTap: () {},
                               ),
-                        SizedBox(height: 14.w,),
+                        SizedBox(
+                          height: 14.w,
+                        ),
                         isScanning
                             ? const SizedBox.shrink()
                             : CustomButton(
