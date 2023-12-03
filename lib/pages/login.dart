@@ -172,7 +172,7 @@ class _LoginPageState extends BaseState<LoginPage> {
                           CustomButton(
                             titleStr: "立即登录",
                             bgStyle: CustomButtonBG
-                                .customButtonLoginGreenButtonStyle,
+                                .customButtonSmallGreenButtonStyle,
                             onTap: canLogin
                                 ? () {
                                     unFocus();

@@ -23,7 +23,7 @@ Future<void> scanNetwork() async {
   }
 }
 
-Future<DeviceInfo> scanNetworkByHttp() async {
+Future<List<DeviceInfo>> scanNetworkByHttp() async {
   DeviceInfo info = await DeviceApi.getDeviceInfo("token");
-  return info;
+  return [info];
 }

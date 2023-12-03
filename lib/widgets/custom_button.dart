@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:p2p_client/common/color_util.dart';
 
 enum CustomButtonBG {
-  customButtonLoginGreenButtonStyle,
+  customButtonSmallGreenButtonStyle,
+  customButtonSmallWhiteButtonStyle,
 }
 
 class CustomButton extends StatefulWidget {
@@ -13,7 +15,6 @@ class CustomButton extends StatefulWidget {
   Color? textColor = Colors.black;
   double? height;
   double? width;
-
 
   CustomButton(
       {required this.titleStr,
@@ -38,48 +39,53 @@ class _CustomButtonState extends State<CustomButton> {
   final BoxDecoration greenDecoration = BoxDecoration(
       borderRadius: BorderRadius.circular(25.w),
       gradient: const LinearGradient(
-          colors: [Color(0xFF6BDCB0), Color(0xFF6BDCB0)],
+          colors: [ColorUtil.greenButtonColor, ColorUtil.greenButtonColor],
           begin: Alignment.centerLeft,
-          end: Alignment.centerRight
-      )
-  );
+          end: Alignment.centerRight));
 
   final BoxDecoration whiteDecoration = BoxDecoration(
-    borderRadius: BorderRadius.circular(25.w),
-    color: const Color(0xFFD5DDE2).withOpacity(0.4)
-  );
+      border: Border.all(color: ColorUtil.greenButtonColor, width: 1.w),
+      borderRadius: BorderRadius.circular(25.w),
+      color: ColorUtil.mainBgColor);
 
   @override
   Widget build(BuildContext context) {
-    width = widget.width??0;
-    height = widget.height??0;
+    width = widget.width ?? 0;
+    height = widget.height ?? 0;
 
     Color? textColor = widget.textColor;
     BoxDecoration btnDecoration = greenDecoration;
-    if (widget.bgStyle == CustomButtonBG.customButtonLoginGreenButtonStyle) {
+    if (widget.bgStyle == CustomButtonBG.customButtonSmallWhiteButtonStyle) {
+      btnDecoration = whiteDecoration;
+    }
+    if (widget.bgStyle == CustomButtonBG.customButtonSmallGreenButtonStyle ||
+        widget.bgStyle == CustomButtonBG.customButtonSmallWhiteButtonStyle) {
       width = 128.w;
       height = 40.w;
     }
 
-    if(widget.onTap == null) {
+    if (widget.onTap == null) {
       btnDecoration = greenDecoration;
       textColor = Colors.black.withOpacity(0.2);
     }
 
-    height = widget.height??height;
+    height = widget.height ?? height;
 
     return Stack(
       children: [
         GestureDetector(
-          onTap: widget.onTap == null ? null : () {
-            if(isClicked) {
-              print("点击过于频繁，跳过该点击");
-              return;
-            }
-            isClicked = true;
-            widget.onTap?.call();
-            Future.delayed(const Duration(seconds: 1)).then((value) => isClicked = false);
-          },
+          onTap: widget.onTap == null
+              ? null
+              : () {
+                  if (isClicked) {
+                    print("点击过于频繁，跳过该点击");
+                    return;
+                  }
+                  isClicked = true;
+                  widget.onTap?.call();
+                  Future.delayed(const Duration(seconds: 1))
+                      .then((value) => isClicked = false);
+                },
           child: Container(
             width: width,
             height: height,
@@ -90,8 +96,10 @@ class _CustomButtonState extends State<CustomButton> {
               style: widget.style ??
                   TextStyle(
                     fontSize: 16.sp,
-                    fontWeight: btnDecoration == greenDecoration ? FontWeight.w600 : FontWeight.w500,
-                    color: textColor??widget.textColor,
+                    fontWeight: btnDecoration == greenDecoration
+                        ? FontWeight.w600
+                        : FontWeight.w500,
+                    color: textColor ?? widget.textColor,
                   ),
             ),
           ),
