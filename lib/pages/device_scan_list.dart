@@ -14,7 +14,8 @@ class DeviceScanListPage extends BaseStatefulWidget {
   final Object? arguments;
   final List<DeviceInfo> devices;
 
-  DeviceScanListPage({Key? key, required this.devices, this.arguments}) : super(key: key);
+  DeviceScanListPage({Key? key, required this.devices, this.arguments})
+      : super(key: key);
 
   @override
   State createState() => _DeviceScanListPageState();
@@ -28,11 +29,11 @@ class _DeviceScanListPageState extends BaseState<DeviceScanListPage> {
       backgroundColor: Colors.transparent,
       title: const Text("搜索结果"),
       centerTitle: true,
+      surfaceTintColor: Colors.transparent,
     );
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: appBar,
-      // extendBodyBehindAppBar: true,
       body: Container(
           padding: EdgeInsets.only(
               top: appBar.preferredSize.height +
@@ -40,32 +41,71 @@ class _DeviceScanListPageState extends BaseState<DeviceScanListPage> {
           color: ColorUtil.mainBgColor,
           width: double.infinity,
           height: double.infinity,
-          child: Column(
-            children: [
-              Text(
-                "添加新设备",
-                style: TextStyle(
-                  fontSize: 18.sp,
-                  color: const Color(0xFFCCCCCC),
-                  // fontWeight: FontWeight.w600,
+          child: ListView.separated(
+            padding:
+                EdgeInsets.only(top: 0, bottom: 0, left: 24.w, right: 24.w),
+            itemCount: widget.devices.length,
+            //列表项构造器
+            itemBuilder: (BuildContext context, int index) {
+              var device = widget.devices[index];
+              return InkWell(
+                child: Container(
+                  padding: EdgeInsets.only(left: 14.w, right: 14.w),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.w),
+                  ),
+                  height: 93.w,
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        'assets/images/login_logo.png',
+                        width: 62.w,
+                        height: 55.w,
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 18.w),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "型号：${device.brand}",
+                                style: TextStyle(
+                                    color: ColorUtil.blackTextColor,
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                              Text(
+                                "SN：${device.id}",
+                                style: TextStyle(
+                                    color: ColorUtil.greyTextColor,
+                                    fontSize: 10.sp,
+                                    fontWeight: FontWeight.w400),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      TextButton(
+                        child: Text("绑定设备", style: TextStyle(
+                                  color: ColorUtil.greenTextColor,
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w400),),
+                        onPressed: () {},
+                      )
+                    ],
+                  ),
                 ),
-              ),
-              CustomButton(
-                titleStr: "+",
-                width: 84.w,
-                height: 40.w,
-                style: null,
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) {
-                      return DeviceScanPage();
-                    },
-                    settings:
-                        const RouteSettings(name: RouterPath.pathDeviceAdd),
-                  ));
-                },
-              )
-            ],
+              );
+            },
+            //分割器构造器
+            separatorBuilder: (BuildContext context, int index) {
+              return SizedBox(
+                height: 10.w,
+              );
+            },
           )),
     );
   }

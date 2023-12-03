@@ -1,6 +1,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_save/image_save.dart';
 import 'package:p2p_client/common/const.dart';
@@ -47,8 +48,11 @@ class MyApp extends StatelessWidget {
               //
               // This works for code too, not just values: Most code changes can be
               // tested with just a hot reload.
-              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
               useMaterial3: true,
+              appBarTheme: const AppBarTheme(
+                systemOverlayStyle: SystemUiOverlayStyle.dark,
+              ),
             ),
             home: child,
             builder: EasyLoading.init(),

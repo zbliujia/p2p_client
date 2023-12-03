@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 class ColorUtil {
   static const Color navBlackTitleTextColor = Color(0xFF1F1F1F);
   static const Color mainBgColor = Color(0xFFF5F5F5);
+  static const Color blackTextColor = Color(0xFF3D3D3D);
+  static const Color greyTextColor = Color(0xFFA8A8A8);
   static const Color greenTextColor = Color(0xFF6BDCB0);
   static const Color greenButtonColor = Color(0xFF6BDCB0);
 
