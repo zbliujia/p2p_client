@@ -11,8 +11,8 @@ import 'base.dart';
 
 class HttpUtil {
   static String get host {
-    return "http://192.168.0.109:3000";
-    // return "http://10.250.27.68:3000";
+    // return "http://192.168.0.109:3000";
+    return "http://10.250.27.68:3000";
     // return "http://127.0.0.1:3000";
   }
 

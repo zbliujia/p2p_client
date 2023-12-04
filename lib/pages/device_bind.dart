@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:p2p_client/common/const.dart';
 import 'package:p2p_client/common/find_devices.dart';
 import 'package:p2p_client/models/device_info.dart';
+import 'package:p2p_client/network/base.dart';
+import 'package:p2p_client/network/server_api.dart';
 import 'package:p2p_client/pages/device_scan_list.dart';
 import 'package:p2p_client/widgets/base_state.dart';
 import 'package:p2p_client/widgets/custom_button.dart';
@@ -26,9 +29,17 @@ class _DeviceBindPageState extends BaseState<DeviceBindPage> {
   String textTitleFirst = "设备首次绑定，您将成为该设备的管理员";
   String textTitleOther = "设备绑定";
 
-  @override
-  void initState() {
-    super.initState();
+  void bindDevice(String device) async {
+    if (device.isEmpty) {
+      EasyLoading.showError("设备ID不能为空");
+      return;
+    }
+    try {
+      await ServerApi.bindDevice(device);
+      EasyLoading.showSuccess("绑定成功");
+    } on HttpError catch (e) {
+      EasyLoading.showError(e.errMsg);
+    }
   }
 
   @override
@@ -82,7 +93,9 @@ class _DeviceBindPageState extends BaseState<DeviceBindPage> {
               CustomButton(
                 titleStr: "绑定设备",
                 bgStyle: CustomButtonBG.customButtonSmallGreenButtonStyle,
-                onTap: () {},
+                onTap: () {
+                  bindDevice(widget.device.id??"");
+                },
               )
             ],
           )),

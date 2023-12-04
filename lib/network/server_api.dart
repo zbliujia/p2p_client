@@ -21,6 +21,16 @@ class ServerApi {
     return User.fromJson(result);
   }
 
+  static Future<void> bindDevice(String device) async {
+    await HttpUtil.postHttpData('/api/v1/user/bindDevice', {'device': device});
+    return;
+  }
+
+  static Future<void> setDefaultDevice(String device) async {
+    await HttpUtil.postHttpData('/api/v1/user/setDefaultDevice', {'device': device});
+    return;
+  }
+
   // static Future<UserInfo> getUserInfo() async {
   //   final result = await HttpUtil.getHttpData('/sdstation/user/getUserInfo');
   //   return UserInfo.fromJson(result);

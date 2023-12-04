@@ -8,6 +8,7 @@ import 'package:p2p_client/common/const.dart';
 import 'package:p2p_client/common/find_devices.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:p2p_client/pages/device_add.dart';
+import 'package:p2p_client/pages/device_scan_list.dart';
 import 'package:p2p_client/pages/login.dart';
 import 'package:p2p_client/pages/video_detail.dart';
 
@@ -106,13 +107,23 @@ class _MyHomePageState extends State<MyHomePage> {
       if (Global.userInfo?.device != null && Global.userInfo!.device!.isNotEmpty) {
         // 进入连接设备的页面
       } else {
-        // 进入绑定设备页面
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) {
-            return DeviceAddPage();
-          },
-          settings: const RouteSettings(name: RouterPath.pathDeviceAdd),
-        ));
+        if (Global.userInfo?.devices == null || Global.userInfo!.devices!.isEmpty) {
+          // 进入绑定设备页面
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) {
+              return DeviceAddPage();
+            },
+            settings: const RouteSettings(name: RouterPath.pathDeviceAdd),
+          ));
+        } else {
+          // 进入设备列表页面
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) {
+              return DeviceScanListPage(devices: Global.userInfo!.devices!);
+            },
+            settings: const RouteSettings(name: RouterPath.pathMyDevice),
+          ));
+        }
       }
     }).catchError((e){
       Navigator.of(context).push(MaterialPageRoute(
