@@ -120,73 +120,79 @@ class _LoginPageState extends BaseState<LoginPage> {
       // ),
       // centerTitle: true,
     );
-    return KeyboardDismisser(
-      child: Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: appBar,
-        // extendBodyBehindAppBar: true,
-        body: Container(
-            padding: EdgeInsets.only(
-                top: appBar.preferredSize.height +
-                    MediaQuery.of(context).padding.top),
-            color: ColorUtil.mainBgColor,
-            width: double.infinity,
-            height: double.infinity,
-            child: Column(
-              children: [
-                Text(
-                  "欢迎来到llano私有云",
-                  style: TextStyle(
-                    fontSize: 24.sp,
-                    color: const Color(0xFF3D3D3D),
-                    // fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Image.asset(
-                  'assets/images/login_logo.png',
-                  width: 169.w,
-                  height: 148.w,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 24.w, right: 24.w, top: 20.w),
-                  child: Container(
-                    width: double.infinity,
-                    height: 224.w,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: KeyboardDismisser(
+        child: Scaffold(
+          extendBodyBehindAppBar: true,
+          appBar: appBar,
+          // extendBodyBehindAppBar: true,
+          body: Container(
+              padding: EdgeInsets.only(
+                  top: appBar.preferredSize.height +
+                      MediaQuery.of(context).padding.top),
+              color: ColorUtil.mainBgColor,
+              width: double.infinity,
+              height: double.infinity,
+              child: Column(
+                children: [
+                  Text(
+                    "欢迎来到llano私有云",
+                    style: TextStyle(
+                      fontSize: 24.sp,
+                      color: const Color(0xFF3D3D3D),
+                      // fontWeight: FontWeight.w600,
                     ),
-                    child: Padding(
-                      padding:
-                          EdgeInsets.only(left: 24.w, right: 24.w, top: 24.w),
-                      child: Column(
-                        children: [
-                          _inputPhoneWidget(),
-                          SizedBox(
-                            height: 12.w,
-                          ),
-                          _inputCodeWidget(),
-                          SizedBox(
-                            height: 40.w,
-                          ),
-                          CustomButton(
-                            titleStr: "立即登录",
-                            bgStyle: CustomButtonBG
-                                .customButtonSmallGreenButtonStyle,
-                            onTap: canLogin
-                                ? () {
-                                    unFocus();
-                                    login();
-                                  }
-                                : null,
-                          ),
-                        ],
+                  ),
+                  Image.asset(
+                    'assets/images/login_logo.png',
+                    width: 169.w,
+                    height: 148.w,
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsets.only(left: 24.w, right: 24.w, top: 20.w),
+                    child: Container(
+                      width: double.infinity,
+                      height: 224.w,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      ),
+                      child: Padding(
+                        padding:
+                            EdgeInsets.only(left: 24.w, right: 24.w, top: 24.w),
+                        child: Column(
+                          children: [
+                            _inputPhoneWidget(),
+                            SizedBox(
+                              height: 12.w,
+                            ),
+                            _inputCodeWidget(),
+                            SizedBox(
+                              height: 40.w,
+                            ),
+                            CustomButton(
+                              titleStr: "立即登录",
+                              bgStyle: CustomButtonBG
+                                  .customButtonSmallGreenButtonStyle,
+                              onTap: canLogin
+                                  ? () {
+                                      unFocus();
+                                      login();
+                                    }
+                                  : null,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            )),
+                ],
+              )),
+        ),
       ),
     );
   }
