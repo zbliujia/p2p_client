@@ -9,6 +9,7 @@ import 'package:p2p_client/common/find_devices.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:p2p_client/pages/device_add.dart';
 import 'package:p2p_client/pages/device_scan_list.dart';
+import 'package:p2p_client/pages/device_select.dart';
 import 'package:p2p_client/pages/login.dart';
 import 'package:p2p_client/pages/video_detail.dart';
 
@@ -94,6 +95,12 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) {
+        return LoginPage();
+      },
+      settings: const RouteSettings(name: RouterPath.pathLogin),
+    ));
   }
 
   @override
@@ -119,9 +126,9 @@ class _MyHomePageState extends State<MyHomePage> {
           // 进入设备列表页面
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) {
-              return DeviceScanListPage(devices: Global.userInfo!.devices!);
+              return DeviceSelectPage(devices: Global.userInfo!.devices!);
             },
-            settings: const RouteSettings(name: RouterPath.pathMyDevice),
+            settings: const RouteSettings(name: RouterPath.pathDeviceSelect),
           ));
         }
       }

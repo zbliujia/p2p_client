@@ -7,5 +7,5 @@ class RouterPath {
   static const String pathDeviceScan = "/deviceScan";
   static const String pathDeviceScanList = "/deviceScanList";
   static const String pathDeviceBind = "/deviceBind";
-  static const String pathMyDevice = "/myDevices";
+  static const String pathDeviceSelect = "/deviceSelect";
 }

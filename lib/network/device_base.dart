@@ -10,11 +10,10 @@ import '../common/global.dart';
 import 'base.dart';
 
 class HttpUtil {
-  static String get host {
-    return "http://116.162.85.228:8080";
-  }
 
+  static String host = 'http://116.162.85.228:8080';
   static String token = '';
+  static String uid = '';
 
   static final dio = Dio(BaseOptions(
     //配置连接超时时间
@@ -30,7 +29,7 @@ class HttpUtil {
     Options options = Options(
       headers: {
         'cookie':
-            'version=${Global.packageInfo?.version};buildNumber=${Global.packageInfo?.buildNumber};token=$token;',
+            'version=${Global.packageInfo?.version};buildNumber=${Global.packageInfo?.buildNumber};token=$token;uid=$uid;',
       },
     );
 
@@ -86,7 +85,7 @@ class HttpUtil {
     Options options = Options(
       headers: {
         'cookie':
-            'version=${Global.packageInfo?.version};buildNumber=${Global.packageInfo?.buildNumber};token=$token;',
+            'version=${Global.packageInfo?.version};buildNumber=${Global.packageInfo?.buildNumber};token=$token;uid=$uid;',
       },
     );
 
