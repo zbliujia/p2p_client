@@ -8,6 +8,8 @@ import 'package:p2p_client/common/const.dart';
 import 'package:p2p_client/common/find_devices.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:p2p_client/pages/device_add.dart';
+import 'package:p2p_client/pages/device_connect.dart';
+import 'package:p2p_client/pages/device_qr_scan.dart';
 import 'package:p2p_client/pages/device_scan_list.dart';
 import 'package:p2p_client/pages/device_select.dart';
 import 'package:p2p_client/pages/login.dart';
@@ -97,9 +99,9 @@ class _MyHomePageState extends State<MyHomePage> {
     });
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) {
-        return LoginPage();
+        return DeviceQRScanPage();
       },
-      settings: const RouteSettings(name: RouterPath.pathLogin),
+      settings: const RouteSettings(name: RouterPath.pathDeviceQRScan),
     ));
   }
 
@@ -113,6 +115,12 @@ class _MyHomePageState extends State<MyHomePage> {
       Global.userInfo = value;
       if (Global.userInfo?.device != null && Global.userInfo!.device!.isNotEmpty) {
         // 进入连接设备的页面
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) {
+            return DeviceConnectPage(device: Global.userInfo!.devices!.firstWhere((element) => element.id == Global.userInfo?.device));
+          },
+          settings: const RouteSettings(name: RouterPath.pathDeviceConnect),
+        ));
       } else {
         if (Global.userInfo?.devices == null || Global.userInfo!.devices!.isEmpty) {
           // 进入绑定设备页面

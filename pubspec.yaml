@@ -47,6 +47,7 @@ dependencies:
   video_player: ^2.8.1
   lottie: ^2.7.0
   keyboard_dismisser: ^3.0.0
+  mobile_scanner: ^3.5.5
 
 dev_dependencies:
   flutter_test:
