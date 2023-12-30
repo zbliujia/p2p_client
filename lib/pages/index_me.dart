@@ -1,36 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:p2p_client/common/const.dart';
-import 'package:p2p_client/models/device_info.dart';
-import 'package:p2p_client/network/device_base.dart';
-import 'package:p2p_client/pages/index.dart';
+import 'package:p2p_client/common/find_devices.dart';
+import 'package:p2p_client/pages/device_scan.dart';
 import 'package:p2p_client/widgets/base_state.dart';
 import 'package:p2p_client/widgets/custom_button.dart';
 
 import '../common/color_util.dart';
 import '../widgets/base_stateful_widget.dart';
 
-class DeviceConnectPage extends BaseStatefulWidget {
+class IndexMePage extends BaseStatefulWidget {
   final Object? arguments;
-  final DeviceInfo device;
 
-  DeviceConnectPage({Key? key, required this.device, this.arguments})
-      : super(key: key);
+  IndexMePage({Key? key, this.arguments}) : super(key: key);
 
   @override
-  State createState() => _DeviceConnectPageState();
+  State createState() => _IndexMePageState();
 }
 
-class _DeviceConnectPageState extends BaseState<DeviceConnectPage> {
+class _IndexMePageState extends BaseState<IndexMePage> {
   @override
   Widget build(BuildContext context) {
     AppBar appBar = AppBar(
       automaticallyImplyLeading: false,
       elevation: 0,
       backgroundColor: Colors.transparent,
-      title: const Text("连接设备"),
+      title: const Text("我的"),
       centerTitle: true,
     );
     return Scaffold(
@@ -47,7 +43,7 @@ class _DeviceConnectPageState extends BaseState<DeviceConnectPage> {
           child: Column(
             children: [
               Text(
-                "连接设备",
+                "我的",
                 style: TextStyle(
                   fontSize: 18.sp,
                   color: const Color(0xFFCCCCCC),
@@ -55,18 +51,17 @@ class _DeviceConnectPageState extends BaseState<DeviceConnectPage> {
                 ),
               ),
               CustomButton(
-                titleStr: ">>>",
+                titleStr: "+",
                 width: 84.w,
                 height: 40.w,
                 style: null,
                 onTap: () {
-                  HttpUtil.host = "http://${widget.device.publicAddr}";
-                  EasyLoading.showSuccess("连接成功");
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) {
-                      return IndexPage();
+                      return DeviceScanPage();
                     },
-                    settings: const RouteSettings(name: RouterPath.pathIndex),
+                    settings:
+                        const RouteSettings(name: RouterPath.pathDeviceAdd),
                   ));
                 },
               )

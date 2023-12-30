@@ -4,6 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:p2p_client/common/const.dart';
 import 'package:p2p_client/common/find_devices.dart';
 import 'package:p2p_client/pages/device_scan.dart';
+import 'package:p2p_client/pages/index_file.dart';
+import 'package:p2p_client/pages/index_home.dart';
+import 'package:p2p_client/pages/index_me.dart';
 import 'package:p2p_client/widgets/base_state.dart';
 import 'package:p2p_client/widgets/custom_button.dart';
 
@@ -20,6 +23,20 @@ class IndexPage extends BaseStatefulWidget {
 }
 
 class _IndexPageState extends BaseState<IndexPage> {
+  int _selectedIndex = 0;
+  late List<Widget> pages;
+  final pageController = PageController();
+
+  @override
+  void initState() {
+    super.initState();
+    pages = [
+      IndexHomePage(),
+      IndexFilePage(),
+      IndexMePage(),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     AppBar appBar = AppBar(
@@ -30,43 +47,35 @@ class _IndexPageState extends BaseState<IndexPage> {
       centerTitle: true,
     );
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: appBar,
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: '首页',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.file_present),
+            label: '文件',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.people),
+            label: '我的',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: (int index) {
+          pageController.jumpToPage(index);
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+      ),
       // extendBodyBehindAppBar: true,
-      body: Container(
-          padding: EdgeInsets.only(
-              top: appBar.preferredSize.height +
-                  MediaQuery.of(context).padding.top),
-          color: ColorUtil.mainBgColor,
-          width: double.infinity,
-          height: double.infinity,
-          child: Column(
-            children: [
-              Text(
-                "添加新设备",
-                style: TextStyle(
-                  fontSize: 18.sp,
-                  color: const Color(0xFFCCCCCC),
-                  // fontWeight: FontWeight.w600,
-                ),
-              ),
-              CustomButton(
-                titleStr: "+",
-                width: 84.w,
-                height: 40.w,
-                style: null,
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) {
-                      return DeviceScanPage();
-                    },
-                    settings:
-                        const RouteSettings(name: RouterPath.pathDeviceAdd),
-                  ));
-                },
-              )
-            ],
-          )),
+      body: PageView(
+        controller: pageController,
+        physics: const NeverScrollableScrollPhysics(),
+        children: pages,
+      ),
     );
   }
 }
