@@ -10,7 +10,6 @@ import '../common/global.dart';
 import 'base.dart';
 
 class HttpUtil {
-
   static String host = 'http://116.162.85.228:8080';
   static String token = '';
   static String uid = '';
@@ -96,6 +95,74 @@ class HttpUtil {
     try {
       debugPrint("requestUrl=>$requestUrl \n options=>$options \n data=>$data");
       final response = await dio.post(requestUrl, options: options, data: data);
+      debugPrint("requestUrl=>$requestUrl\n response=>$response");
+      if (response.statusCode != 200) {
+        throw HttpError(errNo: -1, errMsg: 'code is $response.statusCode');
+      }
+      if (response.data['errNo'] != 0) {
+        throw HttpError(
+            errNo: response.data['errNo'], errMsg: response.data['errMsg']);
+      }
+      return response.data['data'];
+    } on DioException catch (e) {
+      String errMsg = "网络请求失败，请稍后重试";
+      switch (e.type) {
+        case DioExceptionType.connectionTimeout:
+        case DioExceptionType.receiveTimeout:
+        case DioExceptionType.sendTimeout:
+          errMsg = "网络请求超时，请稍后重试";
+          break;
+        case DioExceptionType.badCertificate:
+        case DioExceptionType.connectionError:
+        case DioExceptionType.badResponse:
+          errMsg = "服务响应异常，请稍后重试";
+          break;
+        case DioExceptionType.unknown:
+          errMsg = "网络连接异常，请检查网络";
+          break;
+        case DioExceptionType.cancel:
+          errMsg = "";
+      }
+      if (errMsg.isNotEmpty) {
+        throw HttpError(errNo: -1, errMsg: errMsg);
+      }
+      return null;
+    } catch (e) {
+      if (e is HttpError) {
+        rethrow;
+      }
+      throw HttpError(errNo: -1, errMsg: "网络请求失败，请稍后重试");
+    } finally {
+      if (showLoading) {
+        EasyLoading.dismiss();
+      }
+    }
+  }
+
+  static Future<dynamic> postHttpBinaryData(
+      String url, Map<String, dynamic> params, String filePath,
+      {bool showLoading = false}) async {
+    if (showLoading) {
+      EasyLoading.show();
+    }
+    var file = File(filePath);
+    Uint8List image = file.readAsBytesSync();
+    Options options = Options(
+      headers: {
+        'Accept': "*/*",
+        'Connection': 'keep-alive',
+        'Content-Length': image.length,
+        'Content-Type': 'application/octet-stream',
+        'cookie':
+            'version=${Global.packageInfo?.version};buildNumber=${Global.packageInfo?.buildNumber};token=$token;uid=$uid;',
+      },
+    );
+
+    String requestUrl = url.startsWith('http') ? url : '$host$url';
+    try {
+
+      // debugPrint("requestUrl=>$requestUrl \n options=>$options \n data=>$data");
+      final response = await dio.post(requestUrl, options: options, data: file.openRead(), queryParameters: params);
       debugPrint("requestUrl=>$requestUrl\n response=>$response");
       if (response.statusCode != 200) {
         throw HttpError(errNo: -1, errMsg: 'code is $response.statusCode');

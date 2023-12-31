@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:p2p_client/common/const.dart';
+import 'package:p2p_client/common/global.dart';
 import 'package:p2p_client/models/device_info.dart';
 import 'package:p2p_client/network/device_base.dart';
 import 'package:p2p_client/pages/index.dart';
@@ -24,6 +27,9 @@ class DeviceConnectPage extends BaseStatefulWidget {
 }
 
 class _DeviceConnectPageState extends BaseState<DeviceConnectPage> {
+
+  var percent = 0.0;
+
   @override
   Widget build(BuildContext context) {
     AppBar appBar = AppBar(
@@ -60,16 +66,33 @@ class _DeviceConnectPageState extends BaseState<DeviceConnectPage> {
                 height: 40.w,
                 style: null,
                 onTap: () {
-                  HttpUtil.host = "http://${widget.device.publicAddr}";
-                  EasyLoading.showSuccess("连接成功");
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) {
-                      return IndexPage();
-                    },
-                    settings: const RouteSettings(name: RouterPath.pathIndex),
-                  ));
+
+                  Timer.periodic(const Duration(seconds: 1), (timer) {
+                    setState(() {
+                      percent += 0.2;
+                    });
+                    if (percent >= 1.0) {
+                      timer.cancel();
+                      HttpUtil.host = "http://${widget.device.publicAddr}";
+                      HttpUtil.uid = Global?.userInfo?.uid ?? "";
+                      HttpUtil.token = widget.device.deviceToken ?? "";
+                      EasyLoading.showSuccess("连接成功");
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) {
+                          return IndexPage();
+                        },
+                        settings: const RouteSettings(name: RouterPath.pathIndex),
+                      ));
+                    }
+                  });
                 },
-              )
+              ),
+              SizedBox(height: 50.w,),
+              LinearProgressIndicator(
+                backgroundColor: Colors.white,
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.green,),
+                value: percent,
+              ),
             ],
           )),
     );

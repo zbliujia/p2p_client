@@ -3,6 +3,7 @@ class DeviceInfo {
   String? model;
   String? name;
   String? id;
+  String? deviceToken;
   String? publicAddr;
 
   DeviceInfo({this.brand, this.model, this.name, this.id, this.publicAddr});
@@ -10,6 +11,7 @@ class DeviceInfo {
   DeviceInfo.fromJson(Map<String, dynamic> json) {
     brand = json['brand'];
     model = json['model'];
+    deviceToken = json['deviceToken'];
     name = json['name'];
     id = json['id'];
     publicAddr = json['publicAddr'];
@@ -20,6 +22,7 @@ class DeviceInfo {
     data['brand'] = this.brand;
     data['model'] = this.model;
     data['name'] = this.name;
+    data['deviceToken'] = this.deviceToken;
     data['id'] = this.id;
     data['publicAddr'] = this.publicAddr;
     return data;

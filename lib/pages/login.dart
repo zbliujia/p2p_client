@@ -17,7 +17,7 @@ import '../widgets/custom_button.dart';
 class LoginPage extends BaseStatefulWidget {
   final Object? arguments;
 
-  LoginPage({Key? key, this.arguments}) : super(key: key);
+  LoginPage({super.key, this.arguments});
 
   @override
   State createState() => _LoginPageState();
@@ -94,6 +94,7 @@ class _LoginPageState extends BaseState<LoginPage> {
           phoneController.text, codeController.text);
       Global.userInfo = user;
       EasyLoading.showSuccess('登录成功${user.uid}');
+      if (context.mounted) Navigator.of(context).pop();
     } on HttpError catch (e) {
       EasyLoading.showError(e.errMsg);
     }

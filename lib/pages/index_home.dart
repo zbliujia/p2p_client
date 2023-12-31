@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:p2p_client/common/const.dart';
-import 'package:p2p_client/common/find_devices.dart';
-import 'package:p2p_client/pages/device_scan.dart';
+import 'package:p2p_client/pages/photo_gallery.dart';
 import 'package:p2p_client/widgets/base_state.dart';
-import 'package:p2p_client/widgets/custom_button.dart';
 
 import '../common/color_util.dart';
 import '../widgets/base_stateful_widget.dart';
@@ -23,7 +20,13 @@ class _IndexHomePageState extends BaseState<IndexHomePage> {
   List<Widget> getSelfIcons() {
     List<Widget> icons = [];
     icons.add(getIcon("图库", () {
-
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) {
+          return PhotoGalleryPage();
+        },
+        settings:
+        const RouteSettings(name: RouterPath.pathPhotoGallery),
+      ));
     }));
     return icons;
   }

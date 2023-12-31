@@ -7,6 +7,8 @@ import 'package:image_save/image_save.dart';
 import 'package:p2p_client/common/const.dart';
 import 'package:p2p_client/common/find_devices.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:p2p_client/common/router_util.dart';
+import 'package:p2p_client/network/server_base.dart';
 import 'package:p2p_client/pages/device_add.dart';
 import 'package:p2p_client/pages/device_connect.dart';
 import 'package:p2p_client/pages/device_qr_scan.dart';
@@ -14,6 +16,7 @@ import 'package:p2p_client/pages/device_scan_list.dart';
 import 'package:p2p_client/pages/device_select.dart';
 import 'package:p2p_client/pages/login.dart';
 import 'package:p2p_client/pages/video_detail.dart';
+import 'package:p2p_client/widgets/base_state.dart';
 
 import 'common/global.dart';
 import 'network/server_api.dart';
@@ -60,6 +63,7 @@ class MyApp extends StatelessWidget {
             ),
             home: child,
             builder: EasyLoading.init(),
+            navigatorObservers: [RouterUtil.routeObserver],
           );
         });
   }
@@ -83,34 +87,35 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends BaseState<MyHomePage> {
   int _counter = 0;
 
   void _incrementCounter() {
+    _counter = 0;
     // scanNetwork();
     // ImageSave.getImagesFromSandbox();
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) {
-        return DeviceQRScanPage();
-      },
-      settings: const RouteSettings(name: RouterPath.pathDeviceQRScan),
-    ));
+    // setState(() {
+    //   // This call to setState tells the Flutter framework that something has
+    //   // changed in this State, which causes it to rerun the build method below
+    //   // so that the display can reflect the updated values. If we changed
+    //   // _counter without calling setState(), then the build method would not be
+    //   // called again, and so nothing would appear to happen.
+    //   _counter++;
+    // });
+    HttpUtil.clear();
+    // Navigator.of(context).push(MaterialPageRoute(
+    //   builder: (context) {
+    //     return DeviceQRScanPage();
+    //   },
+    //   settings: const RouteSettings(name: RouterPath.pathDeviceQRScan),
+    // ));
   }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    final dio = Dio();
-    dio.get('https://www.baidu.com');
+  void checkStatus() {
+    _counter++;
+    if (_counter > 5) {
+      return;
+    }
     ServerApi.userInfo().then((value) {
       Global.userInfo = value;
       if (Global.userInfo?.device != null && Global.userInfo!.device!.isNotEmpty) {
@@ -148,6 +153,22 @@ class _MyHomePageState extends State<MyHomePage> {
         settings: const RouteSettings(name: RouterPath.pathLogin),
       ));
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    final dio = Dio();
+    dio.get('https://www.baidu.com');
+    checkStatus();
+  }
+
+  @override
+  void didPopNext() {
+    // TODO: implement didPopNext
+    super.didPopNext();
+    checkStatus();
   }
 
   @override

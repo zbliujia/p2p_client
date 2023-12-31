@@ -11,4 +11,5 @@ class RouterPath {
   static const String pathDeviceSelect = "/deviceSelect";
   static const String pathDeviceConnect = "/deviceConnect";
   static const String pathIndex = "/index";
+  static const String pathPhotoGallery = "/index/photoGallery";
 }
