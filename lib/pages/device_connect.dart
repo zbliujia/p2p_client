@@ -69,7 +69,7 @@ class _DeviceConnectPageState extends BaseState<DeviceConnectPage> {
 
                   Timer.periodic(const Duration(seconds: 1), (timer) {
                     setState(() {
-                      percent += 0.2;
+                      percent += 0.3;
                     });
                     if (percent >= 1.0) {
                       timer.cancel();

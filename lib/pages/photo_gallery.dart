@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:p2p_client/network/base.dart';
 import 'package:p2p_client/network/device_api.dart';
 import 'package:p2p_client/widgets/base_state.dart';
 import 'package:p2p_client/widgets/custom_button.dart';
@@ -18,7 +20,6 @@ class PhotoGalleryPage extends BaseStatefulWidget {
 }
 
 class _PhotoGalleryPageState extends BaseState<PhotoGalleryPage> {
-
   @override
   void initState() {
     // TODO: implement initState
@@ -37,10 +38,18 @@ class _PhotoGalleryPageState extends BaseState<PhotoGalleryPage> {
         IconButton(
           icon: const Icon(Icons.add),
           onPressed: () async {
-            final List<AssetEntity>? result = await AssetPicker.pickAssets(context);
+            final List<AssetEntity>? result =
+                await AssetPicker.pickAssets(context);
             if (result?.isNotEmpty == true) {
               final file = await result?[0].file;
-              DeviceApi.uploadFile(file?.path ?? "");
+              try {
+                await DeviceApi.uploadFile(file?.path ?? "");
+                EasyLoading.showToast("上传成功");
+              } on HttpError catch (e) {
+                EasyLoading.showError(e.message);
+              } catch (e) {
+                EasyLoading.showError(e.toString());
+              }
             }
           },
         ),
@@ -58,9 +67,7 @@ class _PhotoGalleryPageState extends BaseState<PhotoGalleryPage> {
           width: double.infinity,
           height: double.infinity,
           child: Column(
-            children: [
-
-            ],
+            children: [],
           )),
     );
   }
