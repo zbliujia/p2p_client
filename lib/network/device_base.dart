@@ -23,13 +23,21 @@ class HttpUtil {
     receiveTimeout: const Duration(seconds: 30),
   ));
 
+  static String getFileUrl(String name) {
+    return "$host/GetFile.php?file=$name";
+  }
+
+  static Map<String, String> getCookie() {
+    return {
+      'cookie':
+          'version=${Global.packageInfo?.version};buildNumber=${Global.packageInfo?.buildNumber};token=$token;uid=$uid;',
+    };
+  }
+
   static Future getHttpData(String url,
       [Map<String, dynamic> params = const {}]) async {
     Options options = Options(
-      headers: {
-        'cookie':
-            'version=${Global.packageInfo?.version};buildNumber=${Global.packageInfo?.buildNumber};token=$token;uid=$uid;',
-      },
+      headers: getCookie(),
     );
 
     String requestUrl = url.startsWith('http') ? url : '$host$url';
@@ -160,9 +168,9 @@ class HttpUtil {
 
     String requestUrl = url.startsWith('http') ? url : '$host$url';
     try {
-
       // debugPrint("requestUrl=>$requestUrl \n options=>$options \n data=>$data");
-      final response = await dio.post(requestUrl, options: options, data: file.openRead(), queryParameters: params);
+      final response = await dio.post(requestUrl,
+          options: options, data: file.openRead(), queryParameters: params);
       debugPrint("requestUrl=>$requestUrl\n response=>$response");
       if (response.statusCode != 200) {
         throw HttpError(errNo: -1, errMsg: 'code is $response.statusCode');
