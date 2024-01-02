@@ -433,7 +433,7 @@ packages:
     source: hosted
     version: "5.4.0"
   photo_manager:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: photo_manager
       sha256: "2d698826421ebd045ecc0df60422e9dd24bd22b178310b68444385f783735b55"
@@ -472,6 +472,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "6.1.1"
+  pull_to_refresh:
+    dependency: "direct main"
+    description:
+      name: pull_to_refresh
+      sha256: bbadd5a931837b57739cf08736bea63167e284e71fb23b218c8c9a6e042aad12
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.0.0"
   sky_engine:
     dependency: transitive
     description: flutter
